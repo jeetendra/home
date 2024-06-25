@@ -1,8 +1,16 @@
+import {query} from "@/db"
 const PostForm = () => {
   const handleSubmit = async (formData:FormData) => {
     "use server"
-    console.log("Title:", formData.get('title'));
-    console.log("Body:", formData.get('body'));
+
+    const title = formData.get('title');
+    const body = formData.get('body')
+    const queryStr = `INSERT INTO posts (title, body) VALUES ('${title}', '${body}')`
+    const data = await query(queryStr);
+    console.log(data)
+
+    console.log("Title:", title);
+    console.log("Body:", body);
   };
 
   return (
