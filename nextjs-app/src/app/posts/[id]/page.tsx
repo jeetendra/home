@@ -1,10 +1,26 @@
+import { query } from "@/db";
+
+function fetchFromServer() {
+  // const post = await fetch(`https://dummyjson.com/posts/${postId}`, {
+  //   cache: "force-cache",
+  // }).then((res) => res.json());
+  // console.log(post);
+}
+
 export default async ({ params, searchParams }) => {
   console.log({ params, searchParams });
   const postId = params.id;
-  const post = await fetch(`https://dummyjson.com/posts/${postId}`, {
-    cache: "force-cache",
-  }).then((res) => res.json());
+  const queyStr = `select * from posts where id = ${postId}`;
+
+  const { rows } = await query(queyStr);
+  const post = rows[0];
+
   console.log(post);
+
+  if (!post) {
+    return "No data available";
+  }
+
   return (
     <div>
       <h2 className="text-lg">{post.title}</h2>
