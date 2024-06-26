@@ -6,7 +6,7 @@ export default async () => {
   //   cache: "force-cache",
   // }).then((res) => res.json());
   // console.log(posts);
-
+  console.log("Fetching fresh data")
   const queyStr = `select * from posts limit 30`;
 
   const { rows: posts } = await query(queyStr);

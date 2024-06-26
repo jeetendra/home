@@ -1,4 +1,5 @@
 import {query} from "@/db"
+import { revalidatePath } from "next/cache";
 const PostForm = () => {
   const handleSubmit = async (formData:FormData) => {
     "use server"
@@ -7,10 +8,10 @@ const PostForm = () => {
     const body = formData.get('body')
     const queryStr = `INSERT INTO posts (title, body) VALUES ('${title}', '${body}')`
     const data = await query(queryStr);
-    console.log(data)
 
     console.log("Title:", title);
     console.log("Body:", body);
+    revalidatePath("/posts");
   };
 
   return (
