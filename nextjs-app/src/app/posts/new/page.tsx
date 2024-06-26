@@ -23,12 +23,14 @@ const PostForm = () => {
 
       <div className="flex gap-3">
         <label htmlFor="body">Body:</label>
-        <textarea className="border-2" id="body" name="body" rows="5" required></textarea>
+        <textarea className="border-2" id="body" name="body" rows={5} required></textarea>
       </div>
 
       <button className="border-2 px-2" type="submit">Create Post</button>
     </form>
   );
 };
+
+PostForm.displayname = "New Post"
 
 export default PostForm;

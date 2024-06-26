@@ -1,4 +1,5 @@
 import { query } from "@/db";
+import { notFound } from "next/navigation";
 
 function fetchFromServer() {
   // const post = await fetch(`https://dummyjson.com/posts/${postId}`, {
@@ -7,7 +8,7 @@ function fetchFromServer() {
   // console.log(post);
 }
 
-export default async ({ params, searchParams }) => {
+const Post = async ({ params, searchParams }:{ params:any, searchParams:any}) => {
   console.log({ params, searchParams });
   const postId = params.id;
   const queyStr = `select * from posts where id = ${postId}`;
@@ -18,7 +19,7 @@ export default async ({ params, searchParams }) => {
   console.log(post);
 
   if (!post) {
-    return "No data available";
+    return notFound();
   }
 
   return (
@@ -28,3 +29,5 @@ export default async ({ params, searchParams }) => {
     </div>
   );
 };
+
+export default Post;

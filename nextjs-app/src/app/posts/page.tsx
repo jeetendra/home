@@ -1,7 +1,7 @@
 import { query } from "@/db";
 import Link from "next/link";
 
-export default async () => {
+const Posts = async () => {
   // const posts = await fetch("https://dummyjson.com/posts?select=title", {
   //   cache: "force-cache",
   // }).then((res) => res.json());
@@ -24,3 +24,5 @@ export default async () => {
     </div>
   );
 };
+
+export default Posts
