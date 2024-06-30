@@ -1,14 +1,18 @@
 import { Pool, Query } from "pg";
 
 const pool = new Pool({
-  user: "postgres",
-  database: "posts",
-  password: "postgres",
-  port: 5432,
-  host: "localhost",
+  user: process.env.PGUSER ||  "postgres",
+  password: process.env.PGPASSWORD || "postgres",
+  host: process.env.PGHOST || "localhost",
+  port: Number(process.env.PGPORT) || 5432,
+  database: process.env.PGDATABASE || "posts",
   max: 5,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
+});
+
+pool.on('error', (error, client) => {
+  console.error('ERROR:PG', error);  
 });
 
 export const query = (text: string, param: any[] = []) => {

@@ -1,5 +1,24 @@
 services:
-  db:
+  app:
+    container_name: app
+    build:
+      context: ../../nextjs-app
+      dockerfile: Dockerfile
+    depends_on:
+        - postgres_db
+    ports:
+      - "3000:3000"
+    networks:
+      - post-network
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGHOST=postgres_db
+      - PGPORT=5432
+      - PGDATABASE=posts
+  postgres_db:
     container_name: postgres-db
     image: postgres
     environment:
@@ -12,7 +31,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - db
+      - post-network
     restart: unless-stopped
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d postgres" ]
@@ -20,7 +39,7 @@ services:
       timeout: 10s
       retries: 5
 networks:
-  db:
+  post-network:
     driver: bridge
 
 volumes:
