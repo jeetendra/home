@@ -5,8 +5,8 @@ services:
       context: ../../nextjs-app
       dockerfile: Dockerfile
     depends_on:
-        - postgres_db
-        - redis
+      - postgres_db
+      - redis
     ports:
       - "3000:3000"
     networks:
@@ -19,8 +19,21 @@ services:
       - PGHOST=postgres_db
       - PGPORT=5432
       - PGDATABASE=posts
+
   redis:
     image: 'redis:latest'
+    ports:
+      - "6379:6379"
+  nginx:
+    build: 
+      context: ../nginx
+      dockerfile: Dockerfile
+    depends_on: 
+      - app
+    ports:
+      - '8000:80'
+    networks:
+      - post-network
   postgres_db:
     container_name: postgres-db
     image: postgres

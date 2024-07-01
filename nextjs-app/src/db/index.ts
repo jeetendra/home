@@ -1,5 +1,5 @@
 import { Pool, Query } from "pg";
-import redis from "redis";
+import { createClient } from 'redis';
 
 const pool = new Pool({
   user: process.env.PGUSER ||  "postgres",
@@ -48,7 +48,7 @@ export const getClient = async () => {
 };
 
 
-const redisClient = redis.createClient({
+const redisClient = createClient({
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   retry_strategy: function(options) {
