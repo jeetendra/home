@@ -4,14 +4,20 @@ services:
     build:
       context: ../../nextjs-app
       dockerfile: Dockerfile
+      target: dev
     depends_on:
       - postgres_db
       - redis
     ports:
       - "3000:3000"
+    volumes:
+      - ../../nextjs-app:/app
+    restart: always
     networks:
       - post-network
     environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - PGUSER=postgres
