@@ -27,9 +27,12 @@ services:
       - PGDATABASE=posts
 
   redis:
+    container_name: redis
     image: 'redis:latest'
     ports:
       - "6379:6379"
+    networks:
+      - post-network
   nginx:
     build: 
       context: ../nginx

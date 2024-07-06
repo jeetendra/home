@@ -1,4 +1,5 @@
 import { query } from "@/db";
+import { getCache, setCache } from "@/services/cache";
 import Link from "next/link";
 
 const Posts = async () => {
@@ -6,10 +7,18 @@ const Posts = async () => {
   //   cache: "force-cache",
   // }).then((res) => res.json());
   // console.log(posts);
-  console.log("Fetching fresh data")
-  const queyStr = `select * from posts limit 30`;
 
-  const { rows: posts } = await query(queyStr);
+  let posts = await getCache('posts');
+
+  if(!posts) {
+    console.log("Fetching fresh data")
+    const queyStr = `select * from posts limit 30`;
+
+    ({ rows: posts } = await query(queyStr));
+    setCache('posts', posts);
+  }
+
+  
 
   return (
     <div>
