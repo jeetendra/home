@@ -3,7 +3,7 @@ import { createClient } from 'redis';
 const HOST = process.env.REDIS_HOST;
 const PORT = process.env.REDIS_PORT;
 
-const redisClient = createClient({
+export const redisClient = createClient({
     url: `redis://${HOST}:${PORT}`
 });
 
