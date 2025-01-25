@@ -18,7 +18,7 @@ if user has not provided all required parameters then ask to provide those param
 
 const model = new OllamaFunctions({
   temperature: 0.1,
-  model: "llama3.1",
+  model: "deepseek-r1:8b",
   toolSystemPromptTemplate
 }).bind({
   functions: [
