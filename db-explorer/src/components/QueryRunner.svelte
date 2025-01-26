@@ -25,5 +25,6 @@
     background: #f4f4f4;
     padding: 1em;
     margin-top: 1em;
+    text-align: start;
   }
 </style>
