@@ -1,8 +1,7 @@
 <script lang="ts">
-  export let query = '';
-  export let queryResult = '';
-  export let onRunQuery: (query: string) => void;
-
+  let query = $state('');
+  
+    let { queryResult, onRunQuery} = $props();
   function handleRunQuery() {
     onRunQuery(query);
   }
@@ -11,7 +10,9 @@
 <h2>Run Query</h2>
 <textarea bind:value={query} placeholder="Enter your SQL query here"></textarea>
 <button on:click={handleRunQuery}>Run Query</button>
-<pre>{JSON.stringify(queryResult)}</pre>
+<div>
+    <pre>{JSON.stringify(queryResult, null, 2)}</pre>
+</div>
 
 <style>
   textarea {

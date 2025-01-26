@@ -1,19 +1,20 @@
 <script lang="ts">
-  export let host = '';
-  export let port = '';
-  export let user = '';
-  export let password = '';
-  export let database = '';
-  export let onConnect: (details: { host: string, port: string, user: string, password: string, database: string }) => void;
-
-  function handleConnect(e) {
+  
+  let host = $state('');
+  let port = $state('');
+  let user = $state('');
+  let password = $state('');
+  let database = $state('');
+  let { onConnect } = $props();
+  
+  function handleConnect(e: Event) {
     e.preventDefault();
     onConnect({ host, port, user, password, database });
   }
 </script>
 
 <h2>Database Connection</h2>
-<form onsubmit={handleConnect}>
+<form on:submit={handleConnect}>
   <label>
     Host:
     <input type="text" bind:value={host} />

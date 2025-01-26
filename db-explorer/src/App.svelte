@@ -1,15 +1,9 @@
 <script lang="ts">
   import DatabaseConnection from './components/DatabaseConnection.svelte';
   import QueryRunner from './components/QueryRunner.svelte';
-
-  let host = '';
-  let port = '';
-  let user = '';
-  let password = '';
-  let database = '';
-  let query = '';
-  let queryResult = '';
-  let isConnected = false;
+  
+  let isConnected = $state(false);
+  let queryResult = $state('');
 
   async function handleConnect(details: { host: string, port: string, user: string, password: string, database: string }) {
     try {
@@ -50,16 +44,10 @@
 <main>
   {#if !isConnected}
     <DatabaseConnection
-      {host}
-      {port}
-      {user}
-      {password}
-      {database}
       onConnect={handleConnect}
     />
   {:else}
     <QueryRunner
-      {query}
       {queryResult}
       onRunQuery={handleRunQuery}
     />
