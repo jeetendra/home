@@ -1,20 +1,23 @@
 <script lang="ts">
   import DatabaseConnection from './components/DatabaseConnection.svelte';
   import QueryRunner from './components/QueryRunner.svelte';
-  
+  import { encryptData, decryptData } from './utils/crypto';
+
   let isConnected = $state(false);
   let queryResult = $state('');
 
   function saveConnectionDetails(details: { host: string, port: string, user: string, password: string, database: string }) {
-    sessionStorage.setItem('dbConnection', JSON.stringify(details));
+    encryptData(JSON.stringify(details)).then(encryptedDetails => {
+      sessionStorage.setItem('dbConnection', encryptedDetails);
+    });
   }
 
   function loadConnectionDetails() {
-    const savedDetails = sessionStorage.getItem('dbConnection');
-    if (savedDetails) {
-      return JSON.parse(savedDetails);
+    const encryptedDetails = sessionStorage.getItem('dbConnection');
+    if (encryptedDetails) {
+      return decryptData(encryptedDetails).then(decryptedDetails => JSON.parse(decryptedDetails));
     }
-    return null;
+    return Promise.resolve(null);
   }
 
   async function handleConnect(details: { host: string, port: string, user: string, password: string, database: string }) {
@@ -54,10 +57,11 @@
   }
 
   // Load connection details on mount
-  const savedDetails = loadConnectionDetails();
-  if (savedDetails) {
-    handleConnect(savedDetails);
-  }
+  loadConnectionDetails().then(savedDetails => {
+    if (savedDetails) {
+      handleConnect(savedDetails);
+    }
+  });
 </script>
 
 <main>
