@@ -15,7 +15,10 @@ docker run --rm -d -p 9000:8000 --name dynamodb-local amazon/dynamodb-local
 
 # Check if Docker container is running
 echo "Checking if Docker container is running..."
-docker ps | grep dynamodb-local
+if ! docker ps | grep -q dynamodb-local; then
+  echo "Docker container is not running. Exiting..."
+  exit 1
+fi
 
 # Wait for DynamoDB Local to be ready
 echo "Waiting for DynamoDB Local to be ready..."
