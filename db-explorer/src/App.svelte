@@ -5,6 +5,18 @@
   let isConnected = $state(false);
   let queryResult = $state('');
 
+  function saveConnectionDetails(details: { host: string, port: string, user: string, password: string, database: string }) {
+    sessionStorage.setItem('dbConnection', JSON.stringify(details));
+  }
+
+  function loadConnectionDetails() {
+    const savedDetails = sessionStorage.getItem('dbConnection');
+    if (savedDetails) {
+      return JSON.parse(savedDetails);
+    }
+    return null;
+  }
+
   async function handleConnect(details: { host: string, port: string, user: string, password: string, database: string }) {
     try {
       const response = await fetch('http://localhost:3000/connect', {
@@ -14,6 +26,7 @@
       });
       if (response.ok) {
         isConnected = true;
+        saveConnectionDetails(details);
         alert('Connected to database');
       } else {
         alert('Failed to connect to database');
@@ -38,6 +51,12 @@
     } catch (error) {
       alert('Failed to run query');
     }
+  }
+
+  // Load connection details on mount
+  const savedDetails = loadConnectionDetails();
+  if (savedDetails) {
+    handleConnect(savedDetails);
   }
 </script>
 
