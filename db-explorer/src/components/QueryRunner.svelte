@@ -1,7 +1,7 @@
 <script lang="ts">
   let query = $state('');
-  
-    let { queryResult, onRunQuery} = $props();
+  let { queryResult, onRunQuery } = $props();
+
   function handleRunQuery() {
     onRunQuery(query);
   }
@@ -11,7 +11,7 @@
 <textarea bind:value={query} placeholder="Enter your SQL query here"></textarea>
 <button on:click={handleRunQuery}>Run Query</button>
 <div>
-    <pre>{JSON.stringify(queryResult, null, 2)}</pre>
+  <pre>{JSON.stringify(queryResult, null, 2)}</pre>
 </div>
 
 <style>

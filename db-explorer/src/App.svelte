@@ -1,35 +1,35 @@
 <script lang="ts">
   import DatabaseConnection from './components/DatabaseConnection.svelte';
   import QueryRunner from './components/QueryRunner.svelte';
-  import { encryptData, decryptData } from './utils/crypto';
 
   let isConnected = $state(false);
   let queryResult = $state('');
 
-  function saveConnectionDetails(details: { host: string, port: string, user: string, password: string, database: string }) {
-    encryptData(JSON.stringify(details)).then(encryptedDetails => {
-      sessionStorage.setItem('dbConnection', encryptedDetails);
-    });
-  }
-
-  function loadConnectionDetails() {
-    const encryptedDetails = sessionStorage.getItem('dbConnection');
-    if (encryptedDetails) {
-      return decryptData(encryptedDetails).then(decryptedDetails => JSON.parse(decryptedDetails));
+  async function checkConnection() {
+    try {
+      const response = await fetch('http://localhost:3000/check-connection', {
+        method: 'GET',
+        credentials: 'include' // Include credentials (cookies) with the request
+      });
+      if (response.ok) {
+        const result = await response.json();
+        isConnected = result.isConnected;
+      }
+    } catch (error) {
+      console.error('Failed to check connection status:', error);
     }
-    return Promise.resolve(null);
   }
 
-  async function handleConnect(details: { host: string, port: string, user: string, password: string, database: string }) {
+  async function handleConnect(details: { dbType: string, host: string, port: string, user: string, password: string, database: string }) {
     try {
       const response = await fetch('http://localhost:3000/connect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(details)
+        body: JSON.stringify(details),
+        credentials: 'include' // Include credentials (cookies) with the request
       });
       if (response.ok) {
         isConnected = true;
-        saveConnectionDetails(details);
         alert('Connected to database');
       } else {
         alert('Failed to connect to database');
@@ -44,7 +44,8 @@
       const response = await fetch('http://localhost:3000/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
+        body: JSON.stringify({ query }),
+        credentials: 'include' // Include credentials (cookies) with the request
       });
       if (response.ok) {
         queryResult = await response.json();
@@ -56,12 +57,8 @@
     }
   }
 
-  // Load connection details on mount
-  loadConnectionDetails().then(savedDetails => {
-    if (savedDetails) {
-      handleConnect(savedDetails);
-    }
-  });
+  // Check connection status on mount
+  checkConnection();
 </script>
 
 <main>

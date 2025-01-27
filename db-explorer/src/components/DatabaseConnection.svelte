@@ -1,20 +1,28 @@
 <script lang="ts">
-  
+  let dbType = $state('mysql');
   let host = $state('');
   let port = $state('');
   let user = $state('');
   let password = $state('');
   let database = $state('');
   let { onConnect } = $props();
-  
+
   function handleConnect(e: Event) {
     e.preventDefault();
-    onConnect({ host, port, user, password, database });
+    onConnect({ dbType, host, port, user, password, database });
   }
 </script>
 
 <h2>Database Connection</h2>
-<form on:submit={handleConnect}>
+<form onsubmit={handleConnect}>
+  <label>
+    Database Type:
+    <select bind:value={dbType}>
+      <option value="mysql">MySQL</option>
+      <option value="postgres">PostgreSQL</option>
+      <option value="mongodb">MongoDB</option>
+    </select>
+  </label>
   <label>
     Host:
     <input type="text" bind:value={host} />
