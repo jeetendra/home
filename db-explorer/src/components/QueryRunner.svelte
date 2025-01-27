@@ -1,15 +1,20 @@
 <script lang="ts">
   let query = $state('');
-  let { queryResult, onRunQuery } = $props();
+  let { queryResult, onRunQuery, onCloseConnection } = $props();
 
   function handleRunQuery() {
     onRunQuery(query);
+  }
+
+  function handleCloseConnection() {
+    onCloseConnection();
   }
 </script>
 
 <h2>Run Query</h2>
 <textarea bind:value={query} placeholder="Enter your SQL query here"></textarea>
-<button on:click={handleRunQuery}>Run Query</button>
+<button onclick={handleRunQuery}>Run Query</button>
+<button onclick={handleCloseConnection}>Close Connection</button>
 <div>
   <pre>{JSON.stringify(queryResult, null, 2)}</pre>
 </div>

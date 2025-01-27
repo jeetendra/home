@@ -57,6 +57,23 @@
     }
   }
 
+  async function handleCloseConnection() {
+    try {
+      const response = await fetch('http://localhost:3000/close-connection', {
+        method: 'POST',
+        credentials: 'include' // Include credentials (cookies) with the request
+      });
+      if (response.ok) {
+        isConnected = false;
+        alert('Connection closed');
+      } else {
+        alert('Failed to close connection');
+      }
+    } catch (error) {
+      alert('Failed to close connection');
+    }
+  }
+
   // Check connection status on mount
   checkConnection();
 </script>
@@ -70,6 +87,7 @@
     <QueryRunner
       {queryResult}
       onRunQuery={handleRunQuery}
+      onCloseConnection={handleCloseConnection}
     />
   {/if}
 </main>

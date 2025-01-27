@@ -82,6 +82,33 @@ app.post('/query', async (req, res) => {
   }
 });
 
+app.post('/close-connection', async (req, res) => {
+  if (!req.session.connectionDetails || !req.session.dbType) {
+    return res.status(500).send('Not connected to database');
+  }
+  try {
+    const dbModule = await loadDbModule(req.session.dbType);
+    const connectionKey = dbModule.default.getConnectionKey(req.session.connectionDetails);
+    const connection = dbModule.default.connectionCache.get(connectionKey);
+    if (connection) {
+      dbModule.default.closeConnection(connection);
+      dbModule.default.connectionCache.delete(connectionKey);
+      dbModule.default.clearConnectionTimeout(connectionKey);
+      console.log(`Connection ${connectionKey} closed manually.`);
+    }
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).send('Failed to destroy session');
+      }
+      res.status(200).send('Connection closed');
+    });
+  } catch (error) {
+    console.error('Error closing connection:', error);
+    res.status(500).send('Failed to close connection');
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
   res.status(500).send('Internal server error');
