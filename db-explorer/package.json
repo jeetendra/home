@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
     "start:server": "nodemon --watch server server/index.js",
-    "start:mysql": "docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -p 3306:3306 -d mysql:latest"
+    "start:mysql": "docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -p 3306:3306 -d mysql:latest",
+    "start:postgres": "docker run --name postgres-db -e POSTGRES_PASSWORD=root -e POSTGRES_DB=testdb -p 5432:5432 -d postgres:latest",
+    "start:mongodb": "docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -p 27017:27017 -d mongo:latest"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
