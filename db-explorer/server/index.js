@@ -19,8 +19,7 @@ app.use(session({
 
 const dbModules = {
   mysql: './db/mysql.js',
-  postgres: './db/postgres.js',
-  mongodb: './db/mongodb.js'
+  postgres: './db/postgres.js'
 };
 
 async function loadDbModule(dbType) {

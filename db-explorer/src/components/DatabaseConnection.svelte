@@ -20,7 +20,6 @@
     <select bind:value={dbType}>
       <option value="mysql">MySQL</option>
       <option value="postgres">PostgreSQL</option>
-      <option value="mongodb">MongoDB</option>
     </select>
   </label>
   <label>
