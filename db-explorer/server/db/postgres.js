@@ -1,5 +1,7 @@
-import { Client } from 'pg';
+import pg from 'pg';
 import BaseDatabase from './base.js';
+
+const { Client } = pg;
 
 class PostgresDatabase extends BaseDatabase {
   async getConnection(details) {
