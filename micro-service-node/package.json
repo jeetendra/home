@@ -6,10 +6,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node src/proto/server.mjs",
     "client": "node src/proto/client.mjs",
+
     "rabbit-producer": "node src/rabbitmq/producer.mjs",
     "rabbit-consumer": "node src/rabbitmq/consumer.mjs",
     "exchange-producer": "node src/rabbitmq/exchange-producer.mjs",
-    "exchange-consumer": "node src/rabbitmq/exchange-consumer.mjs"
+    "exchange-consumer": "node src/rabbitmq/exchange-consumer.mjs",
+
+    "nats-publisher": "node src/nats/publisher.mjs",
+    "nats-subscriber": "node src/nats/subscriber.mjs",
+    "nats-request": "node src/nats/request.mjs",
+    "nats-response": "node src/nats/response.mjs"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +24,8 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.12.5",
     "@grpc/proto-loader": "^0.7.13",
-    "amqplib": "^0.10.5"
+    "amqplib": "^0.10.5",
+    "nats": "^2.29.2"
   },
   "devDependencies": {}
 }
