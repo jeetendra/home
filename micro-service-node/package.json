@@ -4,8 +4,12 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node src/server.mjs",
-    "client": "node src/client.mjs"
+    "server": "node src/proto/server.mjs",
+    "client": "node src/proto/client.mjs",
+    "rabbit-producer": "node src/rabbitmq/producer.mjs",
+    "rabbit-consumer": "node src/rabbitmq/consumer.mjs",
+    "exchange-producer": "node src/rabbitmq/exchange-producer.mjs",
+    "exchange-consumer": "node src/rabbitmq/exchange-consumer.mjs"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +17,8 @@
   "description": "",
   "dependencies": {
     "@grpc/grpc-js": "^1.12.5",
-    "@grpc/proto-loader": "^0.7.13"
+    "@grpc/proto-loader": "^0.7.13",
+    "amqplib": "^0.10.5"
   },
   "devDependencies": {}
 }
