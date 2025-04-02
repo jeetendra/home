@@ -1,0 +1,52 @@
+
+.typeahead {
+    position: relative;
+    display: inline-block;  
+}
+
+.typeahead input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.typeahead input:focus {
+    border-color: #007bff;
+    outline: none;        
+} 
+
+.typeahead .suggestions-list {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+    margin-top: 0.25rem;
+    padding: 0;
+    list-style: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.typeahead .suggestion-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 1rem;
+}
+
+.typeahead .suggestion-item:hover {
+    background-color: #e9ecef;
+
+}
+
+.typeahead .suggestion-item.selected {
+    background-color: #007bff;
+    color: white;
+}
